@@ -34,6 +34,6 @@ Tap PHPMyAdmin.
 Use `root`/`usbw` credentials to access MySQL.
 Please, change these via DB admin panel and in `app/config.db.php`.
 
- 1. Create database `dunning`
+ 1. Create database `dunning` with collation `utf8_general_ci`
  1. Create tables according to specs as per
     `app/_Doc/DataModel-spec.xls`
