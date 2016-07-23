@@ -7,6 +7,7 @@
  1. Find yourself in USB Webserver installation directory and:
     - Delete `root` directory
     - Run `git clone ` _`this-repo-url`_ `root` to have this project installed under your web-server root
+ 1. Set-up app database (see below)
  1. Launch USB Webserver and tap `Localhost` button
 
 ## Setting-up USBWebserver
@@ -21,7 +22,18 @@ Add as a last section:
 ```
 <IfModule rewrite_module>
     RewriteEngine on
-    RewriteCond %{SCRIPT_FILENAME} !^/(css/|font-awesome/|fonts/|images/|js/|phpmyadmin/)
+    RewriteCond %{SCRIPT_FILENAME} !^/(css/|font-awesome/|fonts/|images/|js/|phpmyadmin) [NC]
     RewriteRule ^(.+)$ /index.php/$1 [L]
 </IfModule>
 ```
+
+## Setting-up Database
+
+Tap PHPMyAdmin.
+ 
+Use `root`/`usbw` credentials to access MySQL.
+Please, change these via DB admin panel and in `app/config.db.php`.
+
+ 1. Create database `dunning`
+ 1. Create tables according to specs as per
+    `app/_Doc/DataModel-spec.xls`
