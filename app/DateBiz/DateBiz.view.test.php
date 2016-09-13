@@ -1,3 +1,4 @@
+<h2>Test diff</h2>
 <?php
 
 $today = new DateBiz();
@@ -47,7 +48,7 @@ echo p('Today is '.$today->format('Y-m-d (w D)'));
                 . '</td><td>'
                 . $d->format('Y-m-d (w D)')
                 . '</td><td>'
-                . $today->diff($d)->format('%R%a') // %R=='-'|'+'; %r='-'|''
+                . $today->diff($d)->format('%R%a') // %R=='-'|'+'; %r=='-'|''
                 . '</td><td>'
                 . $today->diffWorkingWeekdays($d)
                 . '</td><td>'
@@ -58,6 +59,42 @@ echo p('Today is '.$today->format('Y-m-d (w D)'));
         } ?>
     </tbody>
 </table>
+<h2>Test Reflexivity</h2>
+<?php
+ $date1 = new DateBiz('2016-09-01');
+ $date2 = new DateBiz('2016-09-10');
+?>
+<table class="table table-condensed table-striped table-responsive">
+    <thead>
+    <th>Date 1</th>
+    <th>Date 2</th>
+    <th>Calendar days</th>
+    <th>Working weekdays</th>
+    <th>Adjusted business days</th>
+    </thead>
+    <tbody>
+    <?php
+    for ($i=0;$i<2;$i++) {
+        print ('<tr><td>'
+            . $date1->format('Y-m-d (w D)')
+            . '</td><td>'
+            . $date2->format('Y-m-d (w D)')
+            . '</td><td>'
+            . $date1->diff($date2)->format('%R%a') // %R=='-'|'+'; %r=='-'|''
+            . '</td><td>'
+            . $date1->diffWorkingWeekdays($date2)
+            . '</td><td>'
+            . $date1->diffBusinessDays($date2)
+            . '</td></tr>'
+            . "\n"
+        );
+        $d = $date2;
+        $date2 = $date1;
+        $date1 = $d;
+    } ?>
+    </tbody>
+</table>
+<h2>Test add/sub business days.</h2>
 <table class="table table-condensed table-striped table-responsive">
     <thead>
     <th>Date</th>

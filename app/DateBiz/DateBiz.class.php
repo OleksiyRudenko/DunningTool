@@ -140,20 +140,20 @@ class DateBiz {
 
 	/*
 	 * @name diffWorkingWeekdays
-	 * @desc Difference between this and argument in working weekdays (i.e. Mon-Fri only accounted)
+	 * @desc Working weekdays (i.e. Mon-Fri only accounted) count for interval [this;target]
 	 * @param $date : 'YYYY-MM-DD' | DateBiz | DateTime
-	 * @return false if $this->v === false || argument === false
+	 * @return false|Integer : negative if target date comes before this
 	 */
-	public function diffWorkingWeekdays($date) {
+	public function diffWorkingWeekdays($targetDate) {
         if ($this->v===false)  return false;
-        if (!is_obj($date,'DateBiz'))
-            $date=new DateBiz($date);
-        if ($date->getDTo()===null) return false;
+        if (!is_obj($targetDate,'DateBiz'))
+            $targetDate=new DateBiz($targetDate);
+        if ($targetDate->getDTo()===null) return false;
 
         // get calendar days diff
-        $di = $this->v->diff($date->getDTo());
-        $diValue = $di->days;
-        $diSign = ($di->invert) ? -1 : 1;
+        $di = $this->v->diff($targetDate->getDTo()); // date interval
+        $diValue = $di->days; // calendar days between dates
+        $diSign = ($di->invert) ? -1 : 1; // depends on whether targetDate comes before or after this date
         // convert into business days
         $wwdays = ((int)($diValue/7)) * 5 + self::$RxDOWdiff[$diValue%7][$this->v->format('w')];
         return $wwdays * $diSign;
